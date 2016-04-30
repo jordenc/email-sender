@@ -1,5 +1,6 @@
 "use strict";
 var nodemailer = require('nodemailer');
+
 var mail_user, mail_pass, mail_host, mail_port, mail_from;
 
 function init() {
@@ -27,72 +28,43 @@ Homey.manager('settings').on('set', function (name) {
 
 // flow action handlers
 Homey.manager('flow').on('action.sendmail', function (callback, args) {
-
-	Homey.log('take snapshot - ' + snappath);
 	
 	if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
 	
-		syno.query(snappath, {
-				api    		: 'SYNO.SurveillanceStation.SnapShot',
-				version		: 1,
-				method 		: 'TakeSnapshot',
-				camId  		: args.device.id,
-				blSave		: false,
-				dsId		: 0,
-				'_sid' 		: sid
+		var transporter = nodemailer.createTransport(
+			{
+				host: mail_host,
+				port: mail_port,
+				auth: {
+					user: mail_user,
+					pass: mail_pass
+				},
+				tls: {rejectUnauthorized: false} 
+			});
+		    
+		    var mailOptions = {
 				
-			}, function(err, data) {
-				
-				if (err) {
-					Homey.log (err);
-					callback (null, false);
-				}
-				
-				Homey.log ('result: ' + JSON.stringify(data));
-				
-				var transporter = nodemailer.createTransport(
-				{
-					host: mail_host,
-					port: mail_port,
-					auth: {
-						user: mail_user,
-						pass: mail_pass
-					},
-					tls: {rejectUnauthorized: false} 
-				});
-			    
-			    var mailOptions = {
-					
-					from: 'Homey <' + mail_from + '>',
-				    to: args.mailto,
-				    subject: 'Snapshot from camera #' + args.device.id,
-				    text: '',
-				    html: '',
-			    
-				    attachments: [
-				        {   
-					        filename: data.data.fileName,
-				            content: new Buffer(data.data.imageData, 'base64')
-				        }
-			        ]
+				from: 'Homey <' + mail_from + '>',
+			    to: args.mailto,
+			    subject: args.subject,
+			    text: args.body,
+				html: args.body
+		    }
+		    
+		    transporter.sendMail(mailOptions, function(error, info){
+			    if(error){
+				    callback (error, false);
+			        return Homey.log(error);
 			    }
-			    
-			    transporter.sendMail(mailOptions, function(error, info){
-				    if(error){
-					    callback (null, false);
-				        return Homey.log(error);
-				    }
-				    Homey.log('Message sent: ' + info.response);
-				    callback (null, true);
-				});
-				
+			    Homey.log('Message sent: ' + info.response);
+			    callback (null, true);
 			});
 			
 		} else {
 			
 			Homey.log('Not all required variables for mailing have been set');
 		    
-			callback (null, false);
+			callback ('Not all required variables for mailing have been set', false);
 			
 		}
 	
