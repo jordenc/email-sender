@@ -1,0 +1,14 @@
+{
+	"settings": {
+	  	"intro": "Op deze pagina zijn alle instellingen van uw SMTP te beheren",
+	  	"mailsettings": "Mail instellingen",
+	  	"username": "Mail gebruikersnaam",
+	  	"password": "Mail wachtwoord",
+	  	"hostname": "SMTP server",
+	  	"port": "SMTP poort",
+	  	"sender": "Adres afzender",
+	  	"testSettings": "Test instellingen",
+	  	"gmailexplanation": "Als u gebruik wenst te maken van de SMTP servers van Gmail, moeten eerst 'minder veilige apps' toegang krijgen tot uw GMail account. Ga naar <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>https://www.google.com/settings/security/lesssecureapps</a> om dit in te schakelen.",
+	  	"saveSettings": "Instellingen opslaan"
+  	}
+}

@@ -1,0 +1,14 @@
+{
+	 "settings": {
+	  	"intro": "On this page you can manage your SMTP settings",
+	  	"mailsettings": "Mail settings",
+	  	"username": "Mail username",
+	  	"password": "Mail password",
+	  	"hostname": "SMTP server",
+	  	"port": "SMTP port",
+	  	"sender": "Sender address",
+	  	"testSettings": "Test settings",
+	  	"gmailexplanation": "If you wish to send through Gmail SMTP servers, you first need to allow less secure apps on Gmail via <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>https://www.google.com/settings/security/lesssecureapps</a>",
+	  	"saveSettings": "Save settings"
+  	}
+}

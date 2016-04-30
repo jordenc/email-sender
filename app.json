@@ -1,0 +1,62 @@
+{
+    "id": "email.sender",
+    "name": {
+        "en": "Email sender",
+        "nl": "Email versturen"
+    },
+    "version": "0.1.0",
+    "compatibility": ">=0.8.29",
+    "author": {
+        "name": "Chamid Media",
+        "email": "info@chamidmedia.nl"
+    },
+    "images": {
+      "large": "./assets/images/large.jpg",
+      "small": "./assets/images/small.jpg"
+    },
+    "category": "appliances",
+    "description": {
+    	"en": "Send email using Homey",
+        "nl": "Verstuur e-mail met Homey"
+    },
+    "dependencies": {
+    		"net": "*"
+    },
+     "flow": {
+        "actions": [
+        {
+            "id": "sendmail",
+            "title": {
+                "en": "Send a mail",
+                "nl": "Stuur een e-mail"
+            },
+            "args": [
+	              {
+		              "name": "mailto",
+		              "type": "text",
+		              "placeholder": {
+			              "en": "Mail to",
+			              "nl": "Mail aan"
+		              }
+	              },
+	              {
+		              "name": "subject",
+		              "type": "text",
+		              "placeholder": {
+			              "en": "Subject",
+			              "nl": "Onderwerp"
+		              }
+	              },
+	              {
+		              "name": "body",
+		              "type": "text",
+		              "placeholder": {
+			              "en": "Content",
+			              "nl": "Inhoud"
+		              }
+	              }
+	        ]
+        }
+       ]
+    }
+}
