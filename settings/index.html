@@ -43,6 +43,10 @@
                 <label for="sender" data-i18n="settings.sender">Sender address</label>
                 <input id="sender" type="text" value="" placeholder="you@yourdomain.com"/>
             </div>
+            <div class="field row">
+                <label for="secure" data-i18n="settings.encrypted_connection">Encrypted connection</label>
+                <input id="secure" type="checkbox" value=""/>
+            </div>
 
         </fieldset>
         
@@ -78,6 +82,11 @@
 		       document.getElementById('sender').value = mail_sender; 
 		    });
 		    
+		    Homey.get('mail_secure', function(err, mail_secure){
+		       if( err ) return console.error('Could not get mail_secure', err);
+		       document.getElementById('secure').checked = mail_secure; 
+		    });
+		    
             Homey.ready();
         }
 
@@ -92,6 +101,7 @@
             Homey.set('mail_host', document.getElementById('hostname').value);
             Homey.set('mail_port', document.getElementById('port').value);
             Homey.set('mail_from', document.getElementById('sender').value);
+            Homey.set('mail_secure', document.getElementById('secure').checked);
             
             console.log ("saved the settings!");
             
@@ -116,7 +126,8 @@
 			    "mail_password": document.getElementById('password').value,
 			    "mail_host": document.getElementById('hostname').value,
 			    "mail_port": document.getElementById('port').value,
-			    "mail_from": document.getElementById('sender').value
+			    "mail_from": document.getElementById('sender').value,
+			    "mail_secure": document.getElementById('secure').checked
 			}, function( msg, result ){
 			    
 			    document.getElementById('testresult').innerHTML = JSON.stringify(msg);

@@ -1,7 +1,7 @@
 "use strict";
 var nodemailer = require('nodemailer');
 
-var mail_user, mail_pass, mail_host, mail_port, mail_from;
+var mail_user, mail_pass, mail_host, mail_port, mail_from, mail_secure;
 
 function init() {
 	
@@ -11,6 +11,7 @@ function init() {
 	mail_host = Homey.manager('settings').get('mail_host');
 	mail_port = Homey.manager('settings').get('mail_port');
 	mail_from = Homey.manager('settings').get('mail_from');
+	mail_secure = Homey.manager('settings').get('mail_secure');
 
 	Homey.log('Backend settings updated');
 
@@ -35,6 +36,7 @@ Homey.manager('flow').on('action.sendmail', function (callback, args) {
 			{
 				host: mail_host,
 				port: mail_port,
+				secure: mail_secure,
 				auth: {
 					user: mail_user,
 					pass: mail_pass
