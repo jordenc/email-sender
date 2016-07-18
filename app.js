@@ -1,11 +1,12 @@
 "use strict";
 var nodemailer = require('nodemailer');
 
-var mail_user, mail_pass, mail_host, mail_port, mail_from, mail_secure;
+var mail_user, mail_pass, mail_host, mail_port, mail_from, mail_secure, use_credentials;
 
 function init() {
 	
 	//mail settings (if any)
+	use_credentials = Homey.manager('settings').get('use_credentials');
 	mail_user = Homey.manager('settings').get('mail_user');
 	mail_pass = Homey.manager('settings').get('mail_password');
 	mail_host = Homey.manager('settings').get('mail_host');
@@ -32,17 +33,30 @@ Homey.manager('flow').on('action.sendmail', function (callback, args) {
 	
 	if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
 	
-		var transporter = nodemailer.createTransport(
-			{
-				host: mail_host,
-				port: mail_port,
-				secure: mail_secure,
-				auth: {
-					user: mail_user,
-					pass: mail_pass
-				},
-				tls: {rejectUnauthorized: false} 
-			});
+			if (typeof use_credentials == undefined) use_credentials = true;
+
+			if (use_credentials) {
+				var transporter = nodemailer.createTransport(
+				{
+					host: mail_host,
+					port: mail_port,
+					secure: mail_secure,
+					auth: {
+						user: mail_user,
+						pass: mail_pass
+					},
+					tls: {rejectUnauthorized: false} 
+				});
+			} else {
+				// Don't use authentication. Not supported by all providers
+				var transporter = nodemailer.createTransport(
+				{
+					host: mail_host,
+					port: mail_port,
+					secure: mail_secure,
+					tls: {rejectUnauthorized: false} 
+				});
+			}
 		    
 		    var mailOptions = {
 				

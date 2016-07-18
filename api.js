@@ -8,17 +8,31 @@ module.exports = [
             
            var nodemailer = require('nodemailer');
 			
-			var transporter = nodemailer.createTransport(
-			{
-				host: args.body.mail_host,
-				port: args.body.mail_port,
-				secure: args.body.mail_secure,
-				auth: {
-					user: args.body.mail_user,
-					pass: args.body.mail_password
-				},
-				tls: {rejectUnauthorized: false} 
-			});
+			var use_credentials = args.body.use_credentials;
+			if (typeof use_credentials == undefined) use_credentials = true;
+
+			if (use_credentials) {
+				var transporter = nodemailer.createTransport(
+				{
+					host: args.body.mail_host,
+					port: args.body.mail_port,
+					secure: args.body.mail_secure,
+					auth: {
+						user: args.body.mail_user,
+						pass: args.body.mail_password
+					},
+					tls: {rejectUnauthorized: false} 
+				});
+			} else {
+				// Don't use authentication. Not supported by all providers
+				var transporter = nodemailer.createTransport(
+				{
+					host: args.body.mail_host,
+					port: args.body.mail_port,
+					secure: args.body.mail_secure,
+					tls: {rejectUnauthorized: false} 
+				});
+			}
 		    
 		    var mailOptions = {
 				
