@@ -10,6 +10,10 @@
 			label {
 				width: 150px;
 			}
+            fieldset {
+                border: none;
+                padding: 0;
+            }
 		</style>
 		
     </head>
@@ -24,13 +28,22 @@
             <legend data-i18n="settings.mailsettings">Mail settings</legend>
 
             <div class="field row">
-                <label for="username" data-i18n="settings.username">Mail username</label>
-                <input id="username" type="text" value="" />
+                <label for="use_credentials" data-i18n="settings.use_credentials">Use credentials</label>
+                <input id="use_credentials" type="checkbox" checked="true" onchange="credentials.disabled = !checked">
             </div>
-            <div class="field row">
-                <label for="password" data-i18n="settings.password">Mail password</label>
-                <input id="password" type="password" value="" />
-            </div>
+
+            <fieldset id="credentials">
+                <div class="field row">
+                    <label for="username" data-i18n="settings.username">Mail username</label>
+                    <input id="username" type="text" value="" />
+                </div>
+                <div class="field row">
+                    <label for="password" data-i18n="settings.password">Mail password</label>
+                    <input id="password" type="password" value="" />
+                </div>
+            </fieldset>
+            <br>
+            <br>
             <div class="field row">
                 <label for="hostname" data-i18n="settings.hostname">SMTP server</label>
                 <input id="hostname" type="text" value="" placeholder="mail.yourdomain.com" />
@@ -57,6 +70,12 @@
 
         <script type="text/javascript">
         function onHomeyReady(){
+
+	        Homey.get('use_credentials', function(err, use_credentials){
+		       if( err ) return console.error('Could not get boolean for usage of credentials', err);
+		       document.getElementById('use_credentials').value = use_credentials; 
+		    });
+
 	        Homey.get('mail_user', function(err, username){
 		       if( err ) return console.error('Could not get username', err);
 		       document.getElementById('username').value = username; 
@@ -96,6 +115,7 @@
 			
 			savebutton.disabled = true;
 
+            Homey.set('use_credentials', document.getElementById('use_credentials').value);
             Homey.set('mail_user', document.getElementById('username').value);
             Homey.set('mail_password', document.getElementById('password').value);
             Homey.set('mail_host', document.getElementById('hostname').value);
@@ -122,7 +142,8 @@
             console.log ("Testing the settings .. ");
             
             Homey.api( 'PUT', '/testmail/', {
-			    "mail_user": document.getElementById('username').value,
+			    "use_credentials": document.getElementById('use_credentials').value,
+                "mail_user": document.getElementById('username').value,
 			    "mail_password": document.getElementById('password').value,
 			    "mail_host": document.getElementById('hostname').value,
 			    "mail_port": document.getElementById('port').value,

@@ -2,6 +2,7 @@
 	 "settings": {
 	  	"intro": "On this page you can manage your SMTP settings",
 	  	"mailsettings": "Mail settings",
+		"use_credentials": "Use credentials",
 	  	"username": "Mail username",
 	  	"password": "Mail password",
 	  	"hostname": "SMTP server",

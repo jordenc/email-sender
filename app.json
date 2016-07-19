@@ -4,7 +4,7 @@
         "en": "Email sender",
         "nl": "Email versturen"
     },
-    "version": "0.1.2",
+    "version": "0.1.3",
     "compatibility": ">=0.8.29",
     "author": {
         "name": "Chamid Media",

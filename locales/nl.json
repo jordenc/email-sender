@@ -2,6 +2,7 @@
 	"settings": {
 	  	"intro": "Op deze pagina zijn alle instellingen van uw SMTP te beheren",
 	  	"mailsettings": "Mail instellingen",
+		"use_credentials": "Gebruik login gegevens",
 	  	"username": "Mail gebruikersnaam",
 	  	"password": "Mail wachtwoord",
 	  	"hostname": "SMTP server",
