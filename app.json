@@ -11,7 +11,11 @@
         "email": "info@chamidmedia.nl"
     },
     "contributors": {
-        "email": "inversion-nl@gmail.com"
+	    "developers": [
+		    {
+				"email": "inversion-nl@gmail.com"
+			}
+	    ]
     },
     "images": {
       "large": "./assets/images/large.jpg",
