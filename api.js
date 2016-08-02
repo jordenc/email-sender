@@ -8,8 +8,12 @@ module.exports = [
             
            var nodemailer = require('nodemailer');
 			
+			Homey.log('POST = ' + JSON.stringify(args));
+			
 			var use_credentials = args.body.use_credentials;
 			if (typeof use_credentials == undefined) use_credentials = true;
+			
+			Homey.log ('use_credentials=' + use_credentials);
 
 			if (use_credentials) {
 				var transporter = nodemailer.createTransport(

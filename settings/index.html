@@ -115,7 +115,7 @@
 			
 			savebutton.disabled = true;
 
-            Homey.set('use_credentials', document.getElementById('use_credentials').value);
+            Homey.set('use_credentials', document.getElementById('use_credentials').checked);
             Homey.set('mail_user', document.getElementById('username').value);
             Homey.set('mail_password', document.getElementById('password').value);
             Homey.set('mail_host', document.getElementById('hostname').value);
@@ -142,7 +142,7 @@
             console.log ("Testing the settings .. ");
             
             Homey.api( 'PUT', '/testmail/', {
-			    "use_credentials": document.getElementById('use_credentials').value,
+			    "use_credentials": document.getElementById('use_credentials').checked,
                 "mail_user": document.getElementById('username').value,
 			    "mail_password": document.getElementById('password').value,
 			    "mail_host": document.getElementById('hostname').value,

@@ -7,6 +7,13 @@ function init() {
 	
 	//mail settings (if any)
 	use_credentials = Homey.manager('settings').get('use_credentials');
+	
+	//backwards compatibility
+	if (typeof use_credentials == undefined || typeof use_credentials == 'undefined') {
+		use_credentials = true;
+		Homey.manager('settings').set( 'use_credentials', true);
+	}
+	
 	mail_user = Homey.manager('settings').get('mail_user');
 	mail_pass = Homey.manager('settings').get('mail_password');
 	mail_host = Homey.manager('settings').get('mail_host');
