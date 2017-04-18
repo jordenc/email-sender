@@ -9,6 +9,10 @@ If you wish to send through Gmail SMTP servers, you first need to allow less sec
 Use your complete @gmail.com mail address as the username, smtp.gmail.com as the SMTP server and SMTP port 587.
 
 # Changelog
+
+**Version 0.1.5**
+- Now supports "Image tokens" (for example, the ones created by Synology Surveillance Station or ImageGrabber) in the new action card "Send Image Token"
+
 **Version 0.1.4**
 - Fixed previously introduced bug with use_credentials
 

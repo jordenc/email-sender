@@ -92,3 +92,69 @@ Homey.manager('flow').on('action.sendmail', function (callback, args) {
 		}
 	
 });
+
+Homey.manager('flow').on('action.sendimage', function (callback, args) {
+	
+	if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
+	
+			if (typeof use_credentials == undefined) use_credentials = true;
+
+			if (use_credentials) {
+				var transporter = nodemailer.createTransport(
+				{
+					host: mail_host,
+					port: mail_port,
+					secure: mail_secure,
+					auth: {
+						user: mail_user,
+						pass: mail_pass
+					},
+					tls: {rejectUnauthorized: false} 
+				});
+			} else {
+				// Don't use authentication. Not supported by all providers
+				var transporter = nodemailer.createTransport(
+				{
+					host: mail_host,
+					port: mail_port,
+					secure: mail_secure,
+					tls: {rejectUnauthorized: false} 
+				});
+			}
+			
+			//var body = '';
+			//body.append('photo', new Buffer(args.body, 'base64'),{contentType: 'image/jpeg', filename: 'x.jpg'})
+			
+		    
+		    var mailOptions = {
+				
+				from: 'Homey <' + mail_from + '>',
+			    to: args.mailto,
+			    subject: args.subject,
+			    //text: body,
+				//html: body
+				attachments:[{
+				 filename: "x.jpg",
+				 content: args.body,
+				 encoding: 'base64'
+				}]
+		    }
+		    
+		    transporter.sendMail(mailOptions, function(error, info){
+			    if(error){
+				    callback (error, false);
+			        return Homey.log(error);
+			    }
+			    Homey.log('Message sent: ' + info.response);
+			    callback (null, true);
+			});
+			
+		} else {
+			
+			Homey.log('Not all required variables for mailing have been set');
+		    
+			callback ('Not all required variables for mailing have been set', false);
+			
+		}
+	
+});

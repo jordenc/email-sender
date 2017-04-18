@@ -4,7 +4,7 @@
         "en": "Email sender",
         "nl": "Email versturen"
     },
-    "version": "0.1.4",
+    "version": "0.1.5",
     "compatibility": ">=0.8.29",
     "author": {
         "name": "Chamid Media",
@@ -61,6 +61,39 @@
 		              "placeholder": {
 			              "en": "Content",
 			              "nl": "Inhoud"
+		              }
+	              }
+	        ]
+        },
+        {
+            "id": "sendimage",
+            "title": {
+                "en": "Send image token",
+                "nl": "Stuur afbeelding token"
+            },
+            "args": [
+	              {
+		              "name": "mailto",
+		              "type": "text",
+		              "placeholder": {
+			              "en": "Mail to",
+			              "nl": "Mail aan"
+		              }
+	              },
+	              {
+		              "name": "subject",
+		              "type": "text",
+		              "placeholder": {
+			              "en": "Subject",
+			              "nl": "Onderwerp"
+		              }
+	              },
+	              {
+		              "name": "body",
+		              "type": "text",
+		              "placeholder": {
+			              "en": "Image token",
+			              "nl": "Afbeelding token"
 		              }
 	              }
 	        ]
