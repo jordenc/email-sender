@@ -4,7 +4,7 @@
         "en": "Email sender",
         "nl": "Email versturen"
     },
-    "version": "0.1.5",
+    "version": "0.1.6",
     "compatibility": ">=0.8.29",
     "author": {
         "name": "Chamid Media",
@@ -64,6 +64,39 @@
 		              }
 	              }
 	        ]
+        },
+        {
+            "id": "sendascii",
+            "title": {
+                "en": "Send a txt mail",
+                "nl": "Stuur een txt e-mail"
+            },
+            "args": [
+                {
+                  "name": "mailto",
+                  "type": "text",
+                  "placeholder": {
+                    "en": "Mail to",
+                    "nl": "Mail aan"
+                  }
+                },
+                {
+                  "name": "subject",
+                  "type": "text",
+                  "placeholder": {
+                    "en": "Subject",
+                    "nl": "Onderwerp"
+                  }
+                },
+                {
+                  "name": "body",
+                  "type": "text",
+                  "placeholder": {
+                    "en": "Content",
+                    "nl": "Inhoud"
+                  }
+                }
+          ]
         },
         {
             "id": "sendimage",
