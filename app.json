@@ -15,6 +15,11 @@
 		    {
 			    "name": "Inversion-NL",
 				"email": "inversion-nl@gmail.com"
+			},
+			{
+				"name": "Geurt Dijker",
+				"email": "Homey.Apps@dijker.nu",
+				"website": "http://www.dijker.nu"
 			}
 	    ]
     },
@@ -68,8 +73,8 @@
         {
             "id": "sendascii",
             "title": {
-                "en": "Send a txt mail",
-                "nl": "Stuur een txt e-mail"
+                "en": "Send a text-only mail",
+                "nl": "Stuur een platte tekst e-mail"
             },
             "args": [
                 {

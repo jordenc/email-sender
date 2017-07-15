@@ -128,8 +128,7 @@ Homey.manager('flow').on('action.sendascii', function (callback, args) {
 				from: 'Homey <' + mail_from + '>',
 			    to: args.mailto,
 			    subject: args.subject,
-			    text: args.body,
-				  //html: args.body
+			    text: args.body
 		    }
 
 		    transporter.sendMail(mailOptions, function(error, info){
