@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+	    
+	    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+	    
 		<style>
 			input {
 				font-size:16px;
@@ -69,8 +72,8 @@
         <button class="right" id="testbutton" onclick="test()" data-i18n="settings.testSettings">Test settings</button>
 
         <script type="text/javascript">
-        function onHomeyReady(){
-
+        function onHomeyReady() {
+		 	
 	        Homey.get('use_credentials', function(err, use_credentials){
 		       if( err ) return console.error('Could not get boolean for usage of credentials', err);
 		       document.getElementById('use_credentials').value = use_credentials; 
@@ -106,7 +109,8 @@
 		       document.getElementById('secure').checked = mail_secure; 
 		    });
 		    
-            Homey.ready();
+		    Homey.ready();
+
         }
 
         function save() {
@@ -131,7 +135,7 @@
                 
         }
         
-         function test() {
+        function test() {
 	        
 	        document.getElementById('testresult').innerHTML = "Testing...";
 	        

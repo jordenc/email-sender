@@ -1,218 +1,237 @@
 "use strict";
-var nodemailer = require('nodemailer');
+const Homey = require('homey');
+let nodemailer = require('nodemailer');
 
-var mail_user, mail_pass, mail_host, mail_port, mail_from, mail_secure, use_credentials;
+let mail_user, mail_pass, mail_host, mail_port, mail_from, mail_secure, use_credentials;
 
-function init() {
+class EmailApp extends Homey.App {
+	
+	onInit() {
+	
+		//mail settings (if any)
+		use_credentials = Homey.ManagerSettings.get('use_credentials');
+	
+		//backwards compatibility
+		if (typeof use_credentials == undefined || typeof use_credentials == 'undefined') {
+			use_credentials = true;
+			Homey.manager('settings').set( 'use_credentials', true);
+		}
+	
+		mail_user = Homey.ManagerSettings.get('mail_user');
+		mail_pass = Homey.ManagerSettings.get('mail_password');
+		mail_host = Homey.ManagerSettings.get('mail_host');
+		mail_port = Homey.ManagerSettings.get('mail_port');
+		mail_from = Homey.ManagerSettings.get('mail_from');
+		mail_secure = Homey.ManagerSettings.get('mail_secure');
+	
+		this.log('Backend settings updated');
+		
+		let sendMessage = new Homey.FlowCardAction('sendmail');
+		sendMessage
+		    .register()
+		    .registerRunListener(( args, state ) => {
+		
+				if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
 
-	//mail settings (if any)
-	use_credentials = Homey.manager('settings').get('use_credentials');
+					if (typeof use_credentials == undefined) use_credentials = true;
+		
+					if (use_credentials) {
+						var transporter = nodemailer.createTransport(
+						{
+							host: mail_host,
+							port: mail_port,
+							secure: mail_secure,
+							auth: {
+								user: mail_user,
+								pass: mail_pass
+							},
+							tls: {rejectUnauthorized: false}
+						});
+					} else {
+						// Don't use authentication. Not supported by all providers
+						var transporter = nodemailer.createTransport(
+						{
+							host: mail_host,
+							port: mail_port,
+							secure: mail_secure,
+							tls: {rejectUnauthorized: false}
+						});
+					}
+		
+				    var mailOptions = {
+		
+						from: 'Homey <' + mail_from + '>',
+					    to: args.mailto,
+					    subject: args.subject,
+					    text: args.body,
+						  html: args.body
+				    }
+		
+				    transporter.sendMail(mailOptions, function(error, info){
+					    if(error){
+						    return this.error(error);
+					    }
+					    console.log('Message sent: ' + info.response);
+					    return Promise.resolve (true);
+					    
+					});
+		
+				} else {
+		
+					this.log('Not all required variables for mailing have been set');
+		
+					callback ('Not all required variables for mailing have been set', false);
+		
+				}
+				
+		    })
+	        
+	        
+	    let sendascii = new Homey.FlowCardAction('sendascii');
+		sendascii
+		    .register()
+		    .registerRunListener(( args, state ) => {
+		
+				if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
 
-	//backwards compatibility
-	if (typeof use_credentials == undefined || typeof use_credentials == 'undefined') {
-		use_credentials = true;
-		Homey.manager('settings').set( 'use_credentials', true);
+					if (typeof use_credentials == undefined) use_credentials = true;
+		
+					if (use_credentials) {
+						var transporter = nodemailer.createTransport(
+						{
+							host: mail_host,
+							port: mail_port,
+							secure: mail_secure,
+							auth: {
+								user: mail_user,
+								pass: mail_pass
+							},
+							tls: {rejectUnauthorized: false}
+						});
+					} else {
+						// Don't use authentication. Not supported by all providers
+						var transporter = nodemailer.createTransport(
+						{
+							host: mail_host,
+							port: mail_port,
+							secure: mail_secure,
+							tls: {rejectUnauthorized: false}
+						});
+					}
+		
+				    var mailOptions = {
+		
+						from: 'Homey <' + mail_from + '>',
+					    to: args.mailto,
+					    subject: args.subject,
+					    text: args.body
+				    }
+		
+				    transporter.sendMail(mailOptions, function(error, info){
+					    if(error){
+						    return this.error(error);
+					    }
+					    console.log('Message sent: ' + info.response);
+					    return Promise.resolve (true);
+					    
+					});
+		
+				} else {
+		
+					this.log('Not all required variables for mailing have been set');
+		
+					callback ('Not all required variables for mailing have been set', false);
+		
+				}
+				
+		    })
+	        
+	    let sendimage = new Homey.FlowCardAction('sendimage');
+		sendimage
+		    .register()
+		    .registerRunListener(( args, state ) => {
+		
+				if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
+
+					if (typeof use_credentials == undefined) use_credentials = true;
+		
+					if (use_credentials) {
+						var transporter = nodemailer.createTransport(
+						{
+							host: mail_host,
+							port: mail_port,
+							secure: mail_secure,
+							auth: {
+								user: mail_user,
+								pass: mail_pass
+							},
+							tls: {rejectUnauthorized: false}
+						});
+					} else {
+						// Don't use authentication. Not supported by all providers
+						var transporter = nodemailer.createTransport(
+						{
+							host: mail_host,
+							port: mail_port,
+							secure: mail_secure,
+							tls: {rejectUnauthorized: false}
+						});
+					}
+					
+					let image = args.droptoken;
+					image.getBuffer()
+					.then( buf => {
+						
+						if (image.getFormat() == "jpg") {
+							
+							var filename = "x.jpg";
+						
+						} else if (image.getFormat() == "gif") {
+							
+							var filename = "x.gif";
+							
+						} else if (image.getFormat() == "png") {
+							
+							var filename = "x.png";
+							
+						}
+						
+					    var mailOptions = {
+	
+							from: 'Homey <' + mail_from + '>',
+						    to: args.mailto,
+						    subject: args.subject,
+						    //text: body,
+							//html: body
+							attachments:[{
+							 filename: filename,
+							 content: buf
+							}]
+					    }
+			
+					    transporter.sendMail(mailOptions, function(error, info){
+						    if(error){
+							    return this.error(error);
+						    }
+						    console.log('Message sent: ' + info.response);
+						    return Promise.resolve (true);
+						    
+						});
+						
+					});
+							
+				} else {
+		
+					this.log('Not all required variables for mailing have been set');
+		
+					callback ('Not all required variables for mailing have been set', false);
+		
+				}
+				
+		    })
+	        
 	}
-
-	mail_user = Homey.manager('settings').get('mail_user');
-	mail_pass = Homey.manager('settings').get('mail_password');
-	mail_host = Homey.manager('settings').get('mail_host');
-	mail_port = Homey.manager('settings').get('mail_port');
-	mail_from = Homey.manager('settings').get('mail_from');
-	mail_secure = Homey.manager('settings').get('mail_secure');
-
-	Homey.log('Backend settings updated');
 
 }
 
-//module.exports.testmail = testmail;
-module.exports.init = init;
-
-Homey.manager('settings').on('set', function (name) {
-
-	Homey.log('variable ' + name + ' has been set');
-	init();
-
-});
-
-// flow action handlers
-Homey.manager('flow').on('action.sendmail', function (callback, args) {
-
-	if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
-
-			if (typeof use_credentials == undefined) use_credentials = true;
-
-			if (use_credentials) {
-				var transporter = nodemailer.createTransport(
-				{
-					host: mail_host,
-					port: mail_port,
-					secure: mail_secure,
-					auth: {
-						user: mail_user,
-						pass: mail_pass
-					},
-					tls: {rejectUnauthorized: false}
-				});
-			} else {
-				// Don't use authentication. Not supported by all providers
-				var transporter = nodemailer.createTransport(
-				{
-					host: mail_host,
-					port: mail_port,
-					secure: mail_secure,
-					tls: {rejectUnauthorized: false}
-				});
-			}
-
-		    var mailOptions = {
-
-				from: 'Homey <' + mail_from + '>',
-			    to: args.mailto,
-			    subject: args.subject,
-			    text: args.body,
-				  html: args.body
-		    }
-
-		    transporter.sendMail(mailOptions, function(error, info){
-			    if(error){
-				    callback (error, false);
-			        return Homey.log(error);
-			    }
-			    Homey.log('Message sent: ' + info.response);
-			    callback (null, true);
-			});
-
-		} else {
-
-			Homey.log('Not all required variables for mailing have been set');
-
-			callback ('Not all required variables for mailing have been set', false);
-
-		}
-
-});
-
-
-Homey.manager('flow').on('action.sendascii', function (callback, args) {
-
-	if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
-
-			if (typeof use_credentials == undefined) use_credentials = true;
-
-			if (use_credentials) {
-				var transporter = nodemailer.createTransport(
-				{
-					host: mail_host,
-					port: mail_port,
-					secure: mail_secure,
-					auth: {
-						user: mail_user,
-						pass: mail_pass
-					},
-					tls: {rejectUnauthorized: false}
-				});
-			} else {
-				// Don't use authentication. Not supported by all providers
-				var transporter = nodemailer.createTransport(
-				{
-					host: mail_host,
-					port: mail_port,
-					secure: mail_secure,
-					tls: {rejectUnauthorized: false}
-				});
-			}
-
-		    var mailOptions = {
-
-				from: 'Homey <' + mail_from + '>',
-			    to: args.mailto,
-			    subject: args.subject,
-			    text: args.body
-		    }
-
-		    transporter.sendMail(mailOptions, function(error, info){
-			    if(error){
-				    callback (error, false);
-			        return Homey.log(error);
-			    }
-			    Homey.log('Message sent: ' + info.response);
-			    callback (null, true);
-			});
-
-		} else {
-
-			Homey.log('Not all required variables for mailing have been set');
-
-			callback ('Not all required variables for mailing have been set', false);
-
-		}
-
-});
-
-
-Homey.manager('flow').on('action.sendimage', function (callback, args) {
-
-	if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
-
-			if (typeof use_credentials == undefined) use_credentials = true;
-
-			if (use_credentials) {
-				var transporter = nodemailer.createTransport(
-				{
-					host: mail_host,
-					port: mail_port,
-					secure: mail_secure,
-					auth: {
-						user: mail_user,
-						pass: mail_pass
-					},
-					tls: {rejectUnauthorized: false}
-				});
-			} else {
-				// Don't use authentication. Not supported by all providers
-				var transporter = nodemailer.createTransport(
-				{
-					host: mail_host,
-					port: mail_port,
-					secure: mail_secure,
-					tls: {rejectUnauthorized: false}
-				});
-			}
-
-			//var body = '';
-			//body.append('photo', new Buffer(args.body, 'base64'),{contentType: 'image/jpeg', filename: 'x.jpg'})
-
-
-		    var mailOptions = {
-
-				from: 'Homey <' + mail_from + '>',
-			    to: args.mailto,
-			    subject: args.subject,
-			    //text: body,
-				//html: body
-				attachments:[{
-				 filename: "x.jpg",
-				 content: args.body,
-				 encoding: 'base64'
-				}]
-		    }
-
-		    transporter.sendMail(mailOptions, function(error, info){
-			    if(error){
-				    callback (error, false);
-			        return Homey.log(error);
-			    }
-			    Homey.log('Message sent: ' + info.response);
-			    callback (null, true);
-			});
-
-		} else {
-
-			Homey.log('Not all required variables for mailing have been set');
-
-			callback ('Not all required variables for mailing have been set', false);
-
-		}
-
-});
+module.exports = EmailApp;

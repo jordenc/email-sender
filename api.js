@@ -1,3 +1,5 @@
+const Homey 	=	require('homey');
+
 module.exports = [
     {
         description:		'Test email',

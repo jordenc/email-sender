@@ -10,6 +10,10 @@ Use your complete @gmail.com mail address as the username, smtp.gmail.com as the
 
 # Changelog
 
+**Version 0.2.0**
+- Support for official Homey image tokens
+- Homey SDK v2 version
+
 **Version 0.1.6**
 - New action card for "textonly" email. This will support \n as linebreaks/newlines.
 
