@@ -2,6 +2,7 @@
 <html>
     <head>
 	    
+	    <script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
 	    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
 	    
 		<style>
@@ -68,11 +69,14 @@
         
         <div id="testresult"></div>
 
-        <button class="right" id="savebutton" onclick="save()" data-i18n="settings.saveSettings">Save changes</button>
-        <button class="right" id="testbutton" onclick="test()" data-i18n="settings.testSettings">Test settings</button>
+        <button class="right" id="savebutton" data-i18n="settings.saveSettings">Save changes</button>
+        <button class="right" id="testbutton" data-i18n="settings.testSettings">Test settings</button>
 
         <script type="text/javascript">
-        function onHomeyReady() {
+        
+	    function onHomeyReady(Homey) {
+        
+        	Homey.ready();
 		 	
 	        Homey.get('use_credentials', function(err, use_credentials){
 		       if( err ) return console.error('Could not get boolean for usage of credentials', err);
@@ -108,61 +112,59 @@
 		       if( err ) return console.error('Could not get mail_secure', err);
 		       document.getElementById('secure').checked = mail_secure; 
 		    });
-		    
-		    Homey.ready();
 
-        }
-
-        function save() {
-	        
-			var savebutton = document.getElementById('savebutton');
-			
-			savebutton.disabled = true;
-
-            Homey.set('use_credentials', document.getElementById('use_credentials').checked);
-            Homey.set('mail_user', document.getElementById('username').value);
-            Homey.set('mail_password', document.getElementById('password').value);
-            Homey.set('mail_host', document.getElementById('hostname').value);
-            Homey.set('mail_port', document.getElementById('port').value);
-            Homey.set('mail_from', document.getElementById('sender').value);
-            Homey.set('mail_secure', document.getElementById('secure').checked);
-            
-            console.log ("saved the settings!");
-            
-            setTimeout(function() {
-                    savebutton.disabled = false;
-                }, 3500);
-                
-        }
-        
-        function test() {
-	        
-	        document.getElementById('testresult').innerHTML = "Testing...";
-	        
-			var testbutton = document.getElementById('testbutton');
-			
-			testbutton.disabled = true;
-
-            console.log ("Testing the settings .. ");
-            
-            Homey.api( 'PUT', '/testmail/', {
-			    "use_credentials": document.getElementById('use_credentials').checked,
-                "mail_user": document.getElementById('username').value,
-			    "mail_password": document.getElementById('password').value,
-			    "mail_host": document.getElementById('hostname').value,
-			    "mail_port": document.getElementById('port').value,
-			    "mail_from": document.getElementById('sender').value,
-			    "mail_secure": document.getElementById('secure').checked
-			}, function( msg, result ){
-			    
-			    document.getElementById('testresult').innerHTML = JSON.stringify(msg);
+	        $('#savebutton').on("click", function() {
+		        
+				var savebutton = document.getElementById('savebutton');
 				
-			});
-            
-            setTimeout(function() {
-                    testbutton.disabled = false;
-                }, 3500);
-                
+				savebutton.disabled = true;
+	
+	            Homey.set('use_credentials', document.getElementById('use_credentials').checked);
+	            Homey.set('mail_user', document.getElementById('username').value);
+	            Homey.set('mail_password', document.getElementById('password').value);
+	            Homey.set('mail_host', document.getElementById('hostname').value);
+	            Homey.set('mail_port', document.getElementById('port').value);
+	            Homey.set('mail_from', document.getElementById('sender').value);
+	            Homey.set('mail_secure', document.getElementById('secure').checked);
+	            
+	            console.log ("saved the settings!");
+	            
+	            setTimeout(function() {
+	                    savebutton.disabled = false;
+	                }, 3500);
+	                
+	        });
+	        
+	        $('#testbutton').on("click", function() {
+		            
+		        document.getElementById('testresult').innerHTML = "Testing...";
+		        
+				var testbutton = document.getElementById('testbutton');
+				
+				testbutton.disabled = true;
+	
+	            console.log ("Testing the settings .. ");
+	            
+	            Homey.api( 'PUT', '/testmail/', {
+				    "use_credentials": document.getElementById('use_credentials').checked,
+	                "mail_user": document.getElementById('username').value,
+				    "mail_password": document.getElementById('password').value,
+				    "mail_host": document.getElementById('hostname').value,
+				    "mail_port": document.getElementById('port').value,
+				    "mail_from": document.getElementById('sender').value,
+				    "mail_secure": document.getElementById('secure').checked
+				}, function( msg, result ){
+				    
+				    document.getElementById('testresult').innerHTML = JSON.stringify(msg);
+					
+				});
+	            
+	            setTimeout(function() {
+	                    testbutton.disabled = false;
+	                }, 3500);
+	                
+	        });
+        
         }
         
         </script>

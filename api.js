@@ -5,17 +5,16 @@ module.exports = [
         description:		'Test email',
         method: 		'PUT',
         path:			'/testmail/',
-        fn: function( callback, args ){
-            //var result = Homey.app.updateSomething( args.params.id, args.body );
-            
+        fn: function(args, callback){
+	        
            var nodemailer = require('nodemailer');
 			
-			Homey.log('POST = ' + JSON.stringify(args));
+			console.log('POST = ' + JSON.stringify(args));
 			
 			var use_credentials = args.body.use_credentials;
 			if (typeof use_credentials == undefined) use_credentials = true;
 			
-			Homey.log ('use_credentials=' + use_credentials);
+			console.log ('use_credentials=' + use_credentials);
 
 			if (use_credentials) {
 				var transporter = nodemailer.createTransport(
@@ -52,9 +51,9 @@ module.exports = [
 		    transporter.sendMail(mailOptions, function(error, info){
 			    if(error){
 				    callback (error, false);
-			        return Homey.log(error);
+			        return console.log(error);
 			    }
-			    Homey.log('Message sent: ' + info.response);
+			    console.log('Message sent: ' + info.response);
 			    callback ('Message sent: ' + info.response, true);
 			});
 			
