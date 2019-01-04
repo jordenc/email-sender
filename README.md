@@ -10,6 +10,9 @@ Use your complete @gmail.com mail address as the username, smtp.gmail.com as the
 
 # Changelog
 
+**Version 0.2.2**
+- Crash fix
+
 **Version 0.2.1**
 - Support for API sendmail 
 
