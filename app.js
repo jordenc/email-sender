@@ -217,7 +217,11 @@ class EmailApp extends Homey.App {
 			
 					    transporter.sendMail(mailOptions, function(error, info){
 						    if(error){
-							    return this.error(error);
+							    
+							    console.log(error);
+						    
+								return Promise.resolve (false);
+						    
 						    }
 						    console.log('Message sent: ' + info.response);
 						    return Promise.resolve (true);
