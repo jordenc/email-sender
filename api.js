@@ -4,17 +4,17 @@ module.exports = [
     {
         description:		'Test email',
         method: 		'PUT',
-        path:			'/testmail/',
+        path:			'/testmail',
         fn: function(args, callback){
 	        
            var nodemailer = require('nodemailer');
 			
-			console.log('POST = ' + JSON.stringify(args));
+			//console.log('POST = ' + JSON.stringify(args));
 			
 			var use_credentials = args.body.use_credentials;
 			if (typeof use_credentials == undefined) use_credentials = true;
 			
-			console.log ('use_credentials=' + use_credentials);
+			//console.log ('use_credentials=' + use_credentials);
 
 			if (use_credentials) {
 				var transporter = nodemailer.createTransport(
@@ -50,11 +50,14 @@ module.exports = [
 		    
 		    transporter.sendMail(mailOptions, function(error, info){
 			    if(error){
-				    callback (error, false);
-			        return console.log(error);
+				    
+				    console.error('error = ' + error);
+				    
+				    return callback (false, 'Error: ' + error);
 			    }
+			    
 			    console.log('Message sent: ' + info.response);
-			    callback ('Message sent: ' + info.response, true);
+			    return callback (false, 'Message sent: ' + info.response);
 			});
 			
         }
@@ -64,7 +67,7 @@ module.exports = [
 	    
 	    description:		'API Send Email',
         method: 		'GET',
-        path:			'/sendmail/',
+        path:			'/sendmail',
         fn: function(args, callback){
 	        
 	        var nodemailer = require('nodemailer');
@@ -114,7 +117,7 @@ module.exports = [
 	
 			    transporter.sendMail(mailOptions, function(error, info){
 				    if(error){
-					    return this.error(error);
+					    return Promise.resolve(false);
 				    }
 				    console.log('Message sent: ' + info.response);
 				    return Promise.resolve (true);
@@ -125,7 +128,7 @@ module.exports = [
 	
 				this.log('Not all required variables for mailing have been set');
 	
-				callback ('Not all required variables for mailing have been set', false);
+				return callback ('Not all required variables for mailing have been set', false);
 	
 			}
 	    

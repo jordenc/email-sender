@@ -9,7 +9,7 @@
 	  	"port": "SMTP port",
 	  	"sender": "Sender address",
 	  	"testSettings": "Test settings",
-	  	"gmailexplanation": "If you wish to send through Gmail SMTP servers, you first need to allow less secure apps on Gmail via <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>https://www.google.com/settings/security/lesssecureapps</a>",
+	  	"gmailexplanation": "If you wish to send through Gmail SMTP servers, you first need to allow less secure apps on Gmail via <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>Google security</a>",
 	  	"saveSettings": "Save settings",
 	  	"encrypted_connection": "Use encrypted connection"
   	}

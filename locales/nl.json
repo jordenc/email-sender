@@ -9,7 +9,7 @@
 	  	"port": "SMTP poort",
 	  	"sender": "Adres afzender",
 	  	"testSettings": "Test instellingen",
-	  	"gmailexplanation": "Als u gebruik wenst te maken van de SMTP servers van Gmail, moeten eerst 'minder veilige apps' toegang krijgen tot uw GMail account. Ga naar <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>https://www.google.com/settings/security/lesssecureapps</a> om dit in te schakelen.",
+	  	"gmailexplanation": "Als u gebruik wenst te maken van de SMTP servers van Gmail, moeten eerst 'minder veilige apps' toegang krijgen tot uw GMail account. Ga naar <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>Google security</a> om dit in te schakelen.",
 	  	"saveSettings": "Instellingen opslaan",
 	  	"encrypted_connection": "Gebruik gecodeerde verbinding"
   	}

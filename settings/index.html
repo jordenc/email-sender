@@ -46,8 +46,7 @@
                     <input id="password" type="password" value="" />
                 </div>
             </fieldset>
-            <br>
-            <br>
+
             <div class="field row">
                 <label for="hostname" data-i18n="settings.hostname">SMTP server</label>
                 <input id="hostname" type="text" value="" placeholder="mail.yourdomain.com" />
@@ -69,8 +68,12 @@
         
         <div id="testresult"></div>
 
-        <button class="right" id="savebutton" data-i18n="settings.saveSettings">Save changes</button>
-        <button class="right" id="testbutton" data-i18n="settings.testSettings">Test settings</button>
+        <button id="savebutton" data-i18n="settings.saveSettings">Save changes</button>
+        <button id="testbutton" data-i18n="settings.testSettings">Test settings</button>
+        
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        
 
         <script type="text/javascript">
         
@@ -115,9 +118,7 @@
 
 	        $('#savebutton').on("click", function() {
 		        
-				var savebutton = document.getElementById('savebutton');
-				
-				savebutton.disabled = true;
+				document.getElementById('savebutton').innerHTML = "Saving settings...";
 	
 	            Homey.set('use_credentials', document.getElementById('use_credentials').checked);
 	            Homey.set('mail_user', document.getElementById('username').value);
@@ -128,22 +129,13 @@
 	            Homey.set('mail_secure', document.getElementById('secure').checked);
 	            
 	            console.log ("saved the settings!");
-	            
-	            setTimeout(function() {
-	                    savebutton.disabled = false;
-	                }, 3500);
+	            document.getElementById('savebutton').innerHTML = "Settings saved";
 	                
 	        });
 	        
 	        $('#testbutton').on("click", function() {
 		            
-		        document.getElementById('testresult').innerHTML = "Testing...";
-		        
-				var testbutton = document.getElementById('testbutton');
-				
-				testbutton.disabled = true;
-	
-	            console.log ("Testing the settings .. ");
+		        document.getElementById('testresult').innerHTML = "Testing... please wait";
 	            
 	            Homey.api( 'PUT', '/testmail/', {
 				    "use_credentials": document.getElementById('use_credentials').checked,
@@ -155,13 +147,9 @@
 				    "mail_secure": document.getElementById('secure').checked
 				}, function( msg, result ){
 				    
-				    document.getElementById('testresult').innerHTML = JSON.stringify(msg);
+				    document.getElementById('testresult').innerHTML = JSON.stringify(result);
 					
 				});
-	            
-	            setTimeout(function() {
-	                    testbutton.disabled = false;
-	                }, 3500);
 	                
 	        });
         

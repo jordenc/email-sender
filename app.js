@@ -83,7 +83,7 @@ class EmailApp extends Homey.App {
 		
 					this.log('Not all required variables for mailing have been set');
 		
-					callback ('Not all required variables for mailing have been set', false);
+					return callback ('Not all required variables for mailing have been set', false);
 		
 				}
 				
@@ -221,6 +221,9 @@ class EmailApp extends Homey.App {
 						    
 						});
 						
+					})
+					.catch ( err => {
+						console.error (err);	
 					});
 							
 				} else {
