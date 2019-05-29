@@ -10,6 +10,9 @@ Use your complete @gmail.com mail address as the username, smtp.gmail.com as the
 
 # Changelog
 
+**Version 0.2.4** 
+- Support for new Homey 2.2.0 Image SDK
+
 **Version 0.2.3**
 - Improved settings page for Homey 2.0
 

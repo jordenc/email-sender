@@ -185,53 +185,114 @@ class EmailApp extends Homey.App {
 					}
 					
 					let image = args.droptoken;
-					image.getBuffer()
-					.then( buf => {
+					
+					if (image.getStream) {
 						
-						if (image.getFormat() == "jpg") {
+						//image.getStream()
+						//.then( buf => {
 							
-							var filename = "x.jpg";
-						
-						} else if (image.getFormat() == "gif") {
 							
-							var filename = "x.gif";
+							//const stream = await image.getStream();
+					
+							if (image.contentType == "jpg") {
+								
+								var filename = "x.jpg";
 							
-						} else if (image.getFormat() == "png") {
+							} else if (image.contentType == "gif") {
+								
+								var filename = "x.gif";
+								
+							} else if (image.contentType == "png") {
+								
+								var filename = "x.png";
+								
+							}
 							
-							var filename = "x.png";
-							
-						}
-						
-					    var mailOptions = {
-	
-							from: 'Homey <' + mail_from + '>',
-						    to: args.mailto,
-						    subject: args.subject,
-						    //text: body,
-							//html: body
-							attachments:[{
-							 filename: filename,
-							 content: buf
-							}]
-					    }
-			
-					    transporter.sendMail(mailOptions, function(error, info){
-						    if(error){
-							    
-							    console.log(error);
-						    
-								return Promise.resolve (false);
-						    
+						    var mailOptions = {
+		
+								from: 'Homey <' + mail_from + '>',
+							    to: args.mailto,
+							    subject: args.subject,
+							    //text: body,
+								//html: body
+								attachments:[{
+								 filename: image.filename,
+								 content: image.contentType
+								}]
 						    }
-						    console.log('Message sent: ' + info.response);
-						    return Promise.resolve (true);
-						    
+				
+						    transporter.sendMail(mailOptions, function(error, info){
+							    if(error){
+								    
+								    console.log(error);
+							    
+									return Promise.resolve (false);
+							    
+							    }
+							    console.log('Message sent: ' + info.response);
+							    return Promise.resolve (true);
+							    
+							});
+						
+						/*
+						})
+						.catch ( err => {
+							console.error (err);	
+						});
+						*/
+						
+					} else {
+						//Pre Homey 2.2.0
+					
+						image.getBuffer()
+						.then( buf => {
+							
+							if (image.getFormat() == "jpg") {
+								
+								var filename = "x.jpg";
+							
+							} else if (image.getFormat() == "gif") {
+								
+								var filename = "x.gif";
+								
+							} else if (image.getFormat() == "png") {
+								
+								var filename = "x.png";
+								
+							}
+							
+						    var mailOptions = {
+		
+								from: 'Homey <' + mail_from + '>',
+							    to: args.mailto,
+							    subject: args.subject,
+							    //text: body,
+								//html: body
+								attachments:[{
+								 filename: filename,
+								 content: buf
+								}]
+						    }
+				
+						    transporter.sendMail(mailOptions, function(error, info){
+							    if(error){
+								    
+								    console.log(error);
+							    
+									return Promise.resolve (false);
+							    
+							    }
+							    console.log('Message sent: ' + info.response);
+							    return Promise.resolve (true);
+							    
+							});
+							
+						})
+						.catch ( err => {
+							console.error (err);	
 						});
 						
-					})
-					.catch ( err => {
-						console.error (err);	
-					});
+					}
 							
 				} else {
 		
