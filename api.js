@@ -80,7 +80,7 @@ module.exports = [
 			mail_secure = Homey.ManagerSettings.get('mail_secure');
 		
 			if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
-
+				var use_credentials = args.query.use_credentials;
 				if (typeof use_credentials == undefined) use_credentials = true;
 	
 				if (use_credentials) {
