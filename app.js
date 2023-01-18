@@ -41,7 +41,7 @@ class App extends Homey.App {
 		});
 
 		this.sendMessage = this.homey.flow.getActionCard('sendmail')
-		.registerRunListener(async ( args ) => {
+			.registerRunListener(async ( args ) => {
 		
 				if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
 
@@ -78,18 +78,10 @@ class App extends Homey.App {
 					    text: args.body,
 						  html: args.body
 				    }
-		
-				    transporter.sendMail(mailOptions, function(error, info){
-					    if(error){
-						    //return this.error(error);
-						    console.log ("Error: " + error);
-						    return Promise.resolve (false);
-						    
-					    }
-					    console.log('Message sent: ' + info.response);
-					    return Promise.resolve (true);
-					    
-					});
+
+					const result = await transporter.sendMail(mailOptions);
+
+					this.log('result = ', result);
 		
 				} else {
 		
@@ -140,17 +132,9 @@ class App extends Homey.App {
 					    text: args.body
 				    }
 		
-				    const result = await transporter.sendMail(mailOptions, function(error, info){
-					    if(error){
-						    
-						    console.log(error);
-						    
-						    return Promise.resolve (false);
-					    }
-					    console.log('Message sent: ' + info.response);
-					    return Promise.resolve (true);
-					    
-					});
+				    const result = await transporter.sendMail(mailOptions);
+
+					this.log('result = ', result);
 		
 				} else {
 		
@@ -193,114 +177,43 @@ class App extends Homey.App {
 					}
 					
 					let image = args.droptoken;
-					
-					if (image.getStream) {
-						
-						//image.getStream()
-						//.then( buf => {
-							
-							
-							//const stream = await image.getStream();
-					
-							if (image.contentType == "jpg") {
-								
-								var filename = "x.jpg";
-							
-							} else if (image.contentType == "gif") {
-								
-								var filename = "x.gif";
-								
-							} else if (image.contentType == "png") {
-								
-								var filename = "x.png";
-								
-							}
-							
-						    var mailOptions = {
-		
-								from: 'Homey <' + mail_from + '>',
-							    to: args.mailto,
-							    subject: args.subject,
-							    //text: body,
-								//html: body
-								attachments:[{
-								 filename: image.filename,
-								 content: image.contentType
-								}]
-						    }
-				
-						    transporter.sendMail(mailOptions, function(error, info){
-							    if(error){
-								    
-								    console.log(error);
-							    
-									return Promise.resolve (false, error);
-							    
-							    }
-							    console.log('Message sent: ' + info.response);
-							    return Promise.resolve (true);
-							    
-							});
-						
-						/*
-						})
-						.catch ( err => {
-							console.error (err);	
-						});
-						*/
-						
-					} else {
-						//Pre Homey 2.2.0
-					
-						image.getBuffer()
-						.then( buf => {
-							
-							if (image.getFormat() == "jpg") {
-								
-								var filename = "x.jpg";
-							
-							} else if (image.getFormat() == "gif") {
-								
-								var filename = "x.gif";
-								
-							} else if (image.getFormat() == "png") {
-								
-								var filename = "x.png";
-								
-							}
-							
-						    var mailOptions = {
-		
-								from: 'Homey <' + mail_from + '>',
-							    to: args.mailto,
-							    subject: args.subject,
-							    //text: body,
-								//html: body
-								attachments:[{
-								 filename: filename,
-								 content: buf
-								}]
-						    }
-				
-						    transporter.sendMail(mailOptions, function(error, info){
-							    if(error){
-								    
-								    console.log(error);
-							    
-									return Promise.resolve (false);
-							    
-							    }
-							    console.log('Message sent: ' + info.response);
-							    return Promise.resolve (true);
-							    
-							});
-							
-						})
-						.catch ( err => {
-							console.error (err);	
-						});
-						
+
+					if (typeof image === "undefined" || image == null) {
+						return false;
 					}
+
+					const stream = await image.getStream();
+					
+					if (image.contentType == "jpg") {
+
+						var filename = "x.jpg";
+
+					} else if (image.contentType == "gif") {
+
+						var filename = "x.gif";
+
+					} else if (image.contentType == "png") {
+
+						var filename = "x.png";
+
+					}
+
+					var mailOptions = {
+
+						from: 'Homey <' + mail_from + '>',
+						to: args.mailto,
+						subject: args.subject,
+						//text: body,
+						//html: body
+						attachments:[{
+						 filename: stream.filename,
+						 content: stream
+						}]
+					}
+
+					const result = await transporter.sendMail(mailOptions);
+
+					this.log('result = ', result);
 							
 				} else {
 		
