@@ -5,6 +5,7 @@
         "nl": "Email versturen"
     },
     "sdk": 3,
+    "brandColor": "#e17918",
     "version": "1.0.0",
     "compatibility": ">=5.0.0",
     "author": {
