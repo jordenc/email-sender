@@ -23,53 +23,58 @@
     </head>
     <body>
 
-        <h1>Email-Sender</h1>
+        <h1 class="homey-title" data-i18n="settings.mailsettings">Mail Settings</h1>
         <p data-i18n="settings.intro">On this page you can manage your SMTP mail settings.</p>
         
         <p data-i18n="settings.gmailexplanation">If you wish to send through Gmail SMTP servers, you first need to allow less secure apps on Gmail via <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>https://www.google.com/settings/security/lesssecureapps</a></p>
        
-        <fieldset>
-            <legend data-i18n="settings.mailsettings">Mail settings</legend>
+        <fieldset class="homey-form-fieldset">
 
             <div class="field row">
-                <label for="use_credentials" data-i18n="settings.use_credentials">Use credentials</label>
-                <input id="use_credentials" type="checkbox" checked="true" onchange="credentials.disabled = !checked">
+                <label class="homey-form-checkbox">
+                    <input class="homey-form-checkbox-input" type="checkbox" name="use_credentials" id="use_credentials" checked="true" onchange="credentials.disabled = !checked"/>
+                    <span class="homey-form-checkbox-checkmark"></span>
+                    <span class="homey-form-checkbox-text" data-i18n="settings.use_credentials">Use credentials</span>
+                </label>
             </div>
 
             <fieldset id="credentials">
                 <div class="field row">
-                    <label for="username" data-i18n="settings.username">Mail username</label>
-                    <input id="username" type="text" value="" />
+                    <label class="homey-form-label" for="username" data-i18n="settings.username">Mail username</label>
+                    <input class="homey-form-input" id="username" type="text" value="" />
                 </div>
                 <div class="field row">
-                    <label for="password" data-i18n="settings.password">Mail password</label>
-                    <input id="password" type="password" value="" />
+                    <label class="homey-form-label" for="password" data-i18n="settings.password">Mail password</label>
+                    <input class="homey-form-input" id="password" type="password" value="" />
                 </div>
             </fieldset>
 
             <div class="field row">
-                <label for="hostname" data-i18n="settings.hostname">SMTP server</label>
-                <input id="hostname" type="text" value="" placeholder="mail.yourdomain.com" />
+                <label class="homey-form-label" for="hostname" data-i18n="settings.hostname">SMTP server</label>
+                <input class="homey-form-input" id="hostname" type="text" value="" placeholder="mail.yourdomain.com" />
             </div>
             <div class="field row">
-                <label for="port" data-i18n="settings.port">SMTP port</label>
-                <input id="port" type="text" value="" placeholder="25"/>
+                <label class="homey-form-label" for="port" data-i18n="settings.port">SMTP port</label>
+                <input class="homey-form-input" id="port" type="text" value="" placeholder="25"/>
             </div>
             <div class="field row">
-                <label for="sender" data-i18n="settings.sender">Sender address</label>
-                <input id="sender" type="text" value="" placeholder="you@yourdomain.com"/>
+                <label class="homey-form-label" for="sender" data-i18n="settings.sender">Sender address</label>
+                <input class="homey-form-input" id="sender" type="text" value="" placeholder="you@yourdomain.com"/>
             </div>
             <div class="field row">
-                <label for="secure" data-i18n="settings.encrypted_connection">Encrypted connection</label>
-                <input id="secure" type="checkbox" value=""/>
+                <label class="homey-form-checkbox">
+                    <input class="homey-form-checkbox-input" type="checkbox" name="secure" id="secure"/>
+                    <span class="homey-form-checkbox-checkmark"></span>
+                    <span class="homey-form-checkbox-text" data-i18n="settings.encrypted_connection">Encrypted connection</span>
+                </label>
             </div>
 
         </fieldset>
         
         <div id="testresult"></div>
 
-        <button id="savebutton" data-i18n="settings.saveSettings">Save changes</button>
-        <button id="testbutton" data-i18n="settings.testSettings">Test settings</button>
+        <button id="savebutton" class="homey-button-primary-full" data-i18n="settings.saveSettings">Save changes</button>
+        <button id="testbutton" class="homey-button-secondary-shadow-full" data-i18n="settings.testSettings">Test settings</button>
         
         <p>&nbsp;</p>
         <p>&nbsp;</p>
@@ -137,7 +142,7 @@
 		            
 		        document.getElementById('testresult').innerHTML = "Testing... please wait";
 	            
-	            Homey.api( 'PUT', '/testmail/', {
+	            Homey.api( 'POST', '/testmail', {
 				    "use_credentials": document.getElementById('use_credentials').checked,
 	                "mail_user": document.getElementById('username').value,
 				    "mail_password": document.getElementById('password').value,
@@ -145,10 +150,17 @@
 				    "mail_port": document.getElementById('port').value,
 				    "mail_from": document.getElementById('sender').value,
 				    "mail_secure": document.getElementById('secure').checked
-				}, function( msg, result ){
-				    
-				    document.getElementById('testresult').innerHTML = JSON.stringify(result);
-					
+				}, function(error, message){
+
+                    console.log ('error = ' + error + ', message = ', message);
+
+				    //document.getElementById('testresult').innerHTML = JSON.stringify(message);
+                    if (error) {
+                        document.getElementById('testresult').innerHTML = error + '<br/>';
+                    } else {
+                        document.getElementById('testresult').innerHTML = message.response + '<br/>';
+                    }
+
 				});
 	                
 	        });

@@ -4,12 +4,12 @@
         "en": "Email sender",
         "nl": "Email versturen"
     },
-    "sdk": 2,
-    "version": "0.2.4",
-    "compatibility": ">=1.5.0",
+    "sdk": 3,
+    "version": "1.0.0",
+    "compatibility": ">=5.0.0",
     "author": {
-        "name": "Chamid Media",
-        "email": "info@chamidmedia.nl"
+        "name": "Corbata",
+        "email": "info@corbata.nl"
     },
     "contributors": {
 	    "developers": [
@@ -52,6 +52,10 @@
                 "en": "Send a mail",
                 "nl": "Stuur een e-mail"
             },
+            "titleFormatted": {
+                "en": "Send a mail to [[mailto]] with subject [[subject]] and body [[body]]",
+                "nl": "Stuur een e-mail naar [[mailto]] met onderwerp [[subject]] en inhoud [[body]]"
+            },
             "args": [
 	              {
 		              "name": "mailto",
@@ -84,6 +88,10 @@
             "title": {
                 "en": "Send a text-only mail",
                 "nl": "Stuur een platte tekst e-mail"
+            },
+            "titleFormatted": {
+                "en": "Send a text-only mail to [[mailto]] with subject [[subject]] and body [[body]]",
+                "nl": "Stuur een platte tekst e-mail naar [[mailto]] met onderwerp [[subject]] en inhoud [[body]]"
             },
             "args": [
                 {
@@ -118,6 +126,10 @@
                 "en": "Send image token",
                 "nl": "Stuur afbeelding token"
             },
+            "titleFormatted": {
+                "en": "Send image [[droptoken]] to [[mailto]] with subject [[subject]]",
+                "nl": "Stuur afbeelding [[droptoken]] naar [[mailto]] with subject [[subject]]"
+            },
             "droptoken": "image",
             "args": [
 	              {
@@ -139,5 +151,11 @@
 	        ]
         }
        ]
+    },
+  "api": {
+    "testmail": {
+      "method": "POST",
+      "path": "/testmail"
     }
+  }
 }

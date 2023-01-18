@@ -4,12 +4,12 @@ let nodemailer = require('nodemailer');
 
 let mail_user, mail_pass, mail_host, mail_port, mail_from, mail_secure, use_credentials;
 
-class EmailApp extends Homey.App {
+class App extends Homey.App {
 	
 	onInit() {
 	
 		//mail settings (if any)
-		use_credentials = Homey.ManagerSettings.get('use_credentials');
+		use_credentials = this.homey.settings.get('use_credentials');
 	
 		//backwards compatibility
 		if (typeof use_credentials == undefined || typeof use_credentials == 'undefined') {
@@ -17,19 +17,31 @@ class EmailApp extends Homey.App {
 			Homey.manager('settings').set( 'use_credentials', true);
 		}
 	
-		mail_user = Homey.ManagerSettings.get('mail_user');
-		mail_pass = Homey.ManagerSettings.get('mail_password');
-		mail_host = Homey.ManagerSettings.get('mail_host');
-		mail_port = Homey.ManagerSettings.get('mail_port');
-		mail_from = Homey.ManagerSettings.get('mail_from');
-		mail_secure = Homey.ManagerSettings.get('mail_secure');
+		mail_user = this.homey.settings.get('mail_user');
+		mail_pass = this.homey.settings.get('mail_password');
+		mail_host = this.homey.settings.get('mail_host');
+		mail_port = this.homey.settings.get('mail_port');
+		mail_from = this.homey.settings.get('mail_from');
+		mail_secure = this.homey.settings.get('mail_secure');
 	
-		this.log('Backend settings updated');
-		
-		let sendMessage = new Homey.FlowCardAction('sendmail');
-		sendMessage
-		    .register()
-		    .registerRunListener(( args, state ) => {
+		this.log('Backend settings loaded');
+		this.log('mail_user = ' + mail_user);
+		this.log('mail_host = ' + mail_host);
+
+		this.homey.settings.on('set', function() {
+			mail_user = this.homey.settings.get('mail_user');
+			mail_pass = this.homey.settings.get('mail_password');
+			mail_host = this.homey.settings.get('mail_host');
+			mail_port = this.homey.settings.get('mail_port');
+			mail_from = this.homey.settings.get('mail_from');
+			mail_secure = this.homey.settings.get('mail_secure');
+			this.log('Backend settings updated');
+			this.log('mail_user = ' + mail_user);
+			this.log('mail_host = ' + mail_host);
+		});
+
+		this.sendMessage = this.homey.flow.getActionCard('sendmail')
+		.registerRunListener(async ( args ) => {
 		
 				if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
 
@@ -90,10 +102,8 @@ class EmailApp extends Homey.App {
 		    })
 	        
 	        
-	    let sendascii = new Homey.FlowCardAction('sendascii');
-		sendascii
-		    .register()
-		    .registerRunListener(( args, state ) => {
+	    this.sendascii = this.homey.flow.getActionCard('sendascii')
+		    .registerRunListener(async ( args ) => {
 		
 				if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
 
@@ -130,7 +140,7 @@ class EmailApp extends Homey.App {
 					    text: args.body
 				    }
 		
-				    transporter.sendMail(mailOptions, function(error, info){
+				    const result = await transporter.sendMail(mailOptions, function(error, info){
 					    if(error){
 						    
 						    console.log(error);
@@ -152,10 +162,8 @@ class EmailApp extends Homey.App {
 				
 		    })
 	        
-	    let sendimage = new Homey.FlowCardAction('sendimage');
-		sendimage
-		    .register()
-		    .registerRunListener(( args, state ) => {
+	    this.sendimage = this.homey.flow.getActionCard('sendimage')
+		    .registerRunListener(async ( args ) => {
 		
 				if ( typeof mail_user !== 'undefined' && typeof mail_pass !== 'undefined' && typeof mail_host !== 'undefined' && typeof mail_port !== 'undefined' && typeof mail_from !== 'undefined') {
 
@@ -226,7 +234,7 @@ class EmailApp extends Homey.App {
 								    
 								    console.log(error);
 							    
-									return Promise.resolve (false);
+									return Promise.resolve (false, error);
 							    
 							    }
 							    console.log('Message sent: ' + info.response);
@@ -298,7 +306,7 @@ class EmailApp extends Homey.App {
 		
 					this.log('Not all required variables for mailing have been set');
 		
-					callback ('Not all required variables for mailing have been set', false);
+					return ('Not all required variables for mailing have been set');
 		
 				}
 				
@@ -308,4 +316,4 @@ class EmailApp extends Homey.App {
 
 }
 
-module.exports = EmailApp;
+module.exports = App;
