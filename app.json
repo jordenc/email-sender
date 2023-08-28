@@ -1,158 +1,158 @@
 {
-    "id": "email.sender",
-    "name": {
-        "en": "Email sender",
-        "nl": "Email versturen"
-    },
-    "sdk": 3,
-    "brandColor": "#e17918",
-    "version": "1.0.0",
-    "compatibility": ">=5.0.0",
-    "author": {
-        "name": "Corbata",
-        "email": "info@corbata.nl"
-    },
-    "contributors": {
-	    "developers": [
-		    {
-			    "name": "Inversion-NL",
-				"email": "inversion-nl@gmail.com"
-			},
-			{
-				"name": "Geurt Dijker",
-				"email": "Homey.Apps@dijker.nu",
-				"website": "http://www.dijker.nu"
-			}
-	    ]
-    },
-    "contributing": {
-	    "donate": {
-	        "paypal": {
-	            "email": "info@chamidmedia.nl",
-	            "currency": "EUR"
-	        }
-	    }
-	},
-    "images": {
-      "large": "./assets/images/large.jpg",
-      "small": "./assets/images/small.jpg"
-    },
-    "category": "internet",
-    "description": {
-    	"en": "Send email using Homey",
-        "nl": "Verstuur e-mail met Homey"
-    },
-    "dependencies": {
-    		"net": "*"
-    },
-     "flow": {
-        "actions": [
-        {
-            "id": "sendmail",
-            "title": {
-                "en": "Send a mail",
-                "nl": "Stuur een e-mail"
-            },
-            "titleFormatted": {
-                "en": "Send a mail to [[mailto]] with subject [[subject]] and body [[body]]",
-                "nl": "Stuur een e-mail naar [[mailto]] met onderwerp [[subject]] en inhoud [[body]]"
-            },
-            "args": [
-	              {
-		              "name": "mailto",
-		              "type": "text",
-		              "placeholder": {
-			              "en": "Mail to",
-			              "nl": "Mail aan"
-		              }
-	              },
-	              {
-		              "name": "subject",
-		              "type": "text",
-		              "placeholder": {
-			              "en": "Subject",
-			              "nl": "Onderwerp"
-		              }
-	              },
-	              {
-		              "name": "body",
-		              "type": "text",
-		              "placeholder": {
-			              "en": "Content",
-			              "nl": "Inhoud"
-		              }
-	              }
-	        ]
+  "id": "email.sender",
+  "name": {
+    "en": "Email sender",
+    "nl": "Email versturen"
+  },
+  "sdk": 3,
+  "brandColor": "#e17918",
+  "version": "1.1.0",
+  "compatibility": ">=5.0.0",
+  "author": {
+    "name": "Corbata",
+    "email": "info@corbata.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Inversion-NL",
+        "email": "inversion-nl@gmail.com"
+      },
+      {
+        "name": "Geurt Dijker",
+        "email": "Homey.Apps@dijker.nu",
+        "website": "http://www.dijker.nu"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "email": "info@chamidmedia.nl",
+        "currency": "EUR"
+      }
+    }
+  },
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+  "category": "internet",
+  "description": {
+    "en": "Send email using Homey",
+    "nl": "Verstuur e-mail met Homey"
+  },
+  "dependencies": {
+    "net": "*"
+  },
+  "flow": {
+    "actions": [
+      {
+        "id": "sendmail",
+        "title": {
+          "en": "Send a mail",
+          "nl": "Stuur een e-mail"
         },
-        {
-            "id": "sendascii",
-            "title": {
-                "en": "Send a text-only mail",
-                "nl": "Stuur een platte tekst e-mail"
-            },
-            "titleFormatted": {
-                "en": "Send a text-only mail to [[mailto]] with subject [[subject]] and body [[body]]",
-                "nl": "Stuur een platte tekst e-mail naar [[mailto]] met onderwerp [[subject]] en inhoud [[body]]"
-            },
-            "args": [
-                {
-                  "name": "mailto",
-                  "type": "text",
-                  "placeholder": {
-                    "en": "Mail to",
-                    "nl": "Mail aan"
-                  }
-                },
-                {
-                  "name": "subject",
-                  "type": "text",
-                  "placeholder": {
-                    "en": "Subject",
-                    "nl": "Onderwerp"
-                  }
-                },
-                {
-                  "name": "body",
-                  "type": "text",
-                  "placeholder": {
-                    "en": "Content",
-                    "nl": "Inhoud"
-                  }
-                }
-          ]
+        "titleFormatted": {
+          "en": "Send a mail to [[mailto]] with subject [[subject]] and body [[body]]",
+          "nl": "Stuur een e-mail naar [[mailto]] met onderwerp [[subject]] en inhoud [[body]]"
         },
-        {
-            "id": "sendimage",
-            "title": {
-                "en": "Send image token",
-                "nl": "Stuur afbeelding token"
-            },
-            "titleFormatted": {
-                "en": "Send image [[droptoken]] to [[mailto]] with subject [[subject]]",
-                "nl": "Stuur afbeelding [[droptoken]] naar [[mailto]] with subject [[subject]]"
-            },
-            "droptoken": "image",
-            "args": [
-	              {
-		              "name": "mailto",
-		              "type": "text",
-		              "placeholder": {
-			              "en": "Mail to",
-			              "nl": "Mail aan"
-		              }
-	              },
-	              {
-		              "name": "subject",
-		              "type": "text",
-		              "placeholder": {
-			              "en": "Subject",
-			              "nl": "Onderwerp"
-		              }
-	              }
-	        ]
-        }
-       ]
-    },
+        "args": [
+          {
+            "name": "mailto",
+            "type": "text",
+            "placeholder": {
+              "en": "Mail to",
+              "nl": "Mail aan"
+            }
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "placeholder": {
+              "en": "Subject",
+              "nl": "Onderwerp"
+            }
+          },
+          {
+            "name": "body",
+            "type": "text",
+            "placeholder": {
+              "en": "Content",
+              "nl": "Inhoud"
+            }
+          }
+        ]
+      },
+      {
+        "id": "sendascii",
+        "title": {
+          "en": "Send a text-only mail",
+          "nl": "Stuur een platte tekst e-mail"
+        },
+        "titleFormatted": {
+          "en": "Send a text-only mail to [[mailto]] with subject [[subject]] and body [[body]]",
+          "nl": "Stuur een platte tekst e-mail naar [[mailto]] met onderwerp [[subject]] en inhoud [[body]]"
+        },
+        "args": [
+          {
+            "name": "mailto",
+            "type": "text",
+            "placeholder": {
+              "en": "Mail to",
+              "nl": "Mail aan"
+            }
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "placeholder": {
+              "en": "Subject",
+              "nl": "Onderwerp"
+            }
+          },
+          {
+            "name": "body",
+            "type": "text",
+            "placeholder": {
+              "en": "Content",
+              "nl": "Inhoud"
+            }
+          }
+        ]
+      },
+      {
+        "id": "sendimage",
+        "title": {
+          "en": "Send image token",
+          "nl": "Stuur afbeelding token"
+        },
+        "titleFormatted": {
+          "en": "Send image [[droptoken]] to [[mailto]] with subject [[subject]]",
+          "nl": "Stuur afbeelding [[droptoken]] naar [[mailto]] with subject [[subject]]"
+        },
+        "droptoken": "image",
+        "args": [
+          {
+            "name": "mailto",
+            "type": "text",
+            "placeholder": {
+              "en": "Mail to",
+              "nl": "Mail aan"
+            }
+          },
+          {
+            "name": "subject",
+            "type": "text",
+            "placeholder": {
+              "en": "Subject",
+              "nl": "Onderwerp"
+            }
+          }
+        ]
+      }
+    ]
+  },
   "api": {
     "testmail": {
       "method": "POST",
