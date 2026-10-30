@@ -1,16 +1,23 @@
 {
 	"settings": {
-	  	"intro": "Op deze pagina zijn alle instellingen van uw SMTP te beheren",
-	  	"mailsettings": "Mail instellingen",
+		"intro": "Op deze pagina zijn alle instellingen van uw SMTP te beheren. Wijzigingen worden door uw flows gebruikt zodra u ze opslaat.",
+		"mailsettings": "Mail instellingen",
 		"use_credentials": "Gebruik login gegevens",
-	  	"username": "Mail gebruikersnaam",
-	  	"password": "Mail wachtwoord",
-	  	"hostname": "SMTP server",
-	  	"port": "SMTP poort",
-	  	"sender": "Adres afzender",
-	  	"testSettings": "Test instellingen",
-	  	"gmailexplanation": "Als u gebruik wenst te maken van de SMTP servers van Gmail, moeten eerst 'minder veilige apps' toegang krijgen tot uw GMail account. Ga naar <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>Google security</a> om dit in te schakelen.",
-	  	"saveSettings": "Instellingen opslaan",
-	  	"encrypted_connection": "Gebruik gecodeerde verbinding"
-  	}
+		"username": "Mail gebruikersnaam",
+		"password": "Mail wachtwoord",
+		"hostname": "SMTP server",
+		"port": "SMTP poort",
+		"sender": "Adres afzender",
+		"sendername": "Naam afzender",
+		"testSettings": "Test instellingen",
+		"gmailexplanation": "Als u wilt versturen via de SMTP server van Gmail (smtp.gmail.com, poort 465, gecodeerd), zet dan verificatie in 2 stappen aan en maak een <a href='https://myaccount.google.com/apppasswords' target='_blank'>app-wachtwoord</a> aan. Gebruik dat app-wachtwoord in plaats van uw normale wachtwoord.",
+		"saveSettings": "Instellingen opslaan",
+		"saving": "Instellingen opslaan...",
+		"saved": "Instellingen opgeslagen",
+		"testing": "Testmail versturen, even geduld...",
+		"test_sent": "Testmail verstuurd naar het adres van de afzender. Antwoord van de server:",
+		"encrypted_connection": "Gebruik gecodeerde verbinding",
+		"encrypted_connection_help": "Zet dit aan voor poort 465. Laat het uit voor poort 587, de verbinding wordt dan automatisch gecodeerd als de server dat ondersteunt.",
+		"allow_invalid_certificates": "Accepteer zelf-ondertekende of ongeldige certificaten"
+	}
 }

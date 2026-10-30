@@ -1,47 +1,34 @@
-const Homey 	=	require('homey');
+'use strict';
 
-module.exports =
-{
+const mailer = require('./lib/mailer');
+
+module.exports = {
+
+	// Uses the settings from the form instead of the stored settings, so they can be tested before saving
 	async testmail({homey, body}) {
 
-		let nodemailer = require('nodemailer');
+		const settings = {
+			use_credentials: body.use_credentials !== false,
+			mail_user: body.mail_user,
+			mail_password: body.mail_password,
+			mail_host: body.mail_host,
+			mail_port: body.mail_port,
+			mail_from: body.mail_from,
+			sendername: body.sendername,
+			mail_secure: body.mail_secure === true,
+			allow_invalid_certificates: body.allow_invalid_certificates !== false
+		};
 
-		if (typeof body.use_credentials == undefined) use_credentials = true; else use_credentials = body.use_credentials;
-
-		if (use_credentials) {
-			var transporter = nodemailer.createTransport(
-			{
-				host: body.mail_host,
-				port: body.mail_port,
-				secure: body.mail_secure,
-				auth: {
-					user: body.mail_user,
-					pass: body.mail_password
-				},
-				tls: {rejectUnauthorized: false}
-			});
-		} else {
-			// Don't use authentication. Not supported by all providers
-			var transporter = nodemailer.createTransport(
-			{
-				host: body.mail_host,
-				port: body.mail_port,
-				secure: body.mail_secure,
-				tls: {rejectUnauthorized: false}
-			});
-		}
-
-		var mailOptions = {
-
-			from: 'Homey <' + body.mail_from + '>',
-			to: body.mail_from,
+		const result = await mailer.send_mail(settings, {
+			to: settings.mail_from,
 			subject: 'Testmail',
-			text: 'This is a testmail',
-			html: 'This is a testmail'
-		}
+			text: 'This is a testmail from your Homey.',
+			html: '<p>This is a <b>testmail</b> from your Homey.</p>'
+		});
 
-		const result = await transporter.sendMail(mailOptions);
-		console.log('return terugsturen = ', result);
-		return result;
+		homey.app.log('Testmail sent: ' + result.response);
+
+		return {response: result.response};
 	}
-}
+
+};

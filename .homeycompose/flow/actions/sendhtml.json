@@ -1,0 +1,40 @@
+{
+  "title": {
+    "en": "Send an HTML mail",
+    "nl": "Stuur een HTML e-mail"
+  },
+  "titleFormatted": {
+    "en": "Send an HTML mail to [[mailto]] with subject [[subject]] and HTML body [[body]]",
+    "nl": "Stuur een HTML e-mail naar [[mailto]] met onderwerp [[subject]] en HTML inhoud [[body]]"
+  },
+  "hint": {
+    "en": "The body is sent as HTML, for example <b>bold</b> or <a href=\"https://homey.app\">a link</a>. A plain text version is added automatically.",
+    "nl": "De inhoud wordt als HTML verstuurd, bijvoorbeeld <b>vet</b> of <a href=\"https://homey.app\">een link</a>. Een platte tekst versie wordt automatisch toegevoegd."
+  },
+  "args": [
+    {
+      "name": "mailto",
+      "type": "text",
+      "placeholder": {
+        "en": "Mail to",
+        "nl": "Mail aan"
+      }
+    },
+    {
+      "name": "subject",
+      "type": "text",
+      "placeholder": {
+        "en": "Subject",
+        "nl": "Onderwerp"
+      }
+    },
+    {
+      "name": "body",
+      "type": "text",
+      "placeholder": {
+        "en": "HTML content",
+        "nl": "HTML inhoud"
+      }
+    }
+  ]
+}

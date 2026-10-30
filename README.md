@@ -4,11 +4,18 @@ Send out e-mails using Homey flows.
 
 **Want to show your appreciation for this app? A donation is possible via http://www.d2c.nl **
 
-If you wish to send through Gmail SMTP servers, you first need to allow less secure apps on Gmail via https://www.google.com/settings/security/lesssecureapps
+If you wish to send through Gmail SMTP servers, turn on 2-step verification and create an app password via https://myaccount.google.com/apppasswords. Use that app password instead of your normal password.
 
-Use your complete @gmail.com mail address as the username, smtp.gmail.com as the SMTP server and SMTP port 587.
+Use your complete @gmail.com mail address as the username, smtp.gmail.com as the SMTP server and SMTP port 465 with an encrypted connection.
 
 # Changelog
+
+**Version 1.2.0**
+- Runs on Node.js 22 (Homey v12.9.0 or newer) with the latest nodemailer
+- New action card "Send an HTML mail"
+- The image card can include an optional text and shows the image inside the mail
+- Fixed: changed settings were not always used after saving
+- Setting to accept self-signed or invalid certificates (on by default, as before)
 
 **Version 0.2.4** 
 - Support for new Homey 2.2.0 Image SDK

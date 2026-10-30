@@ -1,0 +1,44 @@
+{
+  "title": {
+    "en": "Send image token",
+    "nl": "Stuur afbeelding tag"
+  },
+  "titleFormatted": {
+    "en": "Send image [[droptoken]] to [[mailto]] with subject [[subject]] and text [[body]]",
+    "nl": "Stuur afbeelding [[droptoken]] naar [[mailto]] met onderwerp [[subject]] en tekst [[body]]"
+  },
+  "hint": {
+    "en": "The image is shown in the mail and added as attachment. The text is optional.",
+    "nl": "De afbeelding wordt in de e-mail getoond en als bijlage toegevoegd. De tekst is optioneel."
+  },
+  "droptoken": [
+    "image"
+  ],
+  "args": [
+    {
+      "name": "mailto",
+      "type": "text",
+      "placeholder": {
+        "en": "Mail to",
+        "nl": "Mail aan"
+      }
+    },
+    {
+      "name": "subject",
+      "type": "text",
+      "placeholder": {
+        "en": "Subject",
+        "nl": "Onderwerp"
+      }
+    },
+    {
+      "name": "body",
+      "type": "text",
+      "placeholder": {
+        "en": "Text (optional)",
+        "nl": "Tekst (optioneel)"
+      },
+      "required": false
+    }
+  ]
+}

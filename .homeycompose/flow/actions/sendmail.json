@@ -1,0 +1,36 @@
+{
+  "title": {
+    "en": "Send a mail",
+    "nl": "Stuur een e-mail"
+  },
+  "titleFormatted": {
+    "en": "Send a mail to [[mailto]] with subject [[subject]] and body [[body]]",
+    "nl": "Stuur een e-mail naar [[mailto]] met onderwerp [[subject]] en inhoud [[body]]"
+  },
+  "args": [
+    {
+      "name": "mailto",
+      "type": "text",
+      "placeholder": {
+        "en": "Mail to",
+        "nl": "Mail aan"
+      }
+    },
+    {
+      "name": "subject",
+      "type": "text",
+      "placeholder": {
+        "en": "Subject",
+        "nl": "Onderwerp"
+      }
+    },
+    {
+      "name": "body",
+      "type": "text",
+      "placeholder": {
+        "en": "Content",
+        "nl": "Inhoud"
+      }
+    }
+  ]
+}

@@ -1,16 +1,23 @@
 {
-	 "settings": {
-	  	"intro": "On this page you can manage your SMTP settings",
-	  	"mailsettings": "Mail settings",
+	"settings": {
+		"intro": "On this page you can manage your SMTP settings. Changes are used by your flows as soon as you save them.",
+		"mailsettings": "Mail settings",
 		"use_credentials": "Use credentials",
-	  	"username": "Mail username",
-	  	"password": "Mail password",
-	  	"hostname": "SMTP server",
-	  	"port": "SMTP port",
-	  	"sender": "Sender address",
-	  	"testSettings": "Test settings",
-	  	"gmailexplanation": "If you wish to send through Gmail SMTP servers, you first need to allow less secure apps on Gmail via <a href='https://www.google.com/settings/security/lesssecureapps' target='_blank'>Google security</a>",
-	  	"saveSettings": "Save settings",
-	  	"encrypted_connection": "Use encrypted connection"
-  	}
+		"username": "Mail username",
+		"password": "Mail password",
+		"hostname": "SMTP server",
+		"port": "SMTP port",
+		"sender": "Sender address",
+		"sendername": "Sender name",
+		"testSettings": "Test settings",
+		"gmailexplanation": "If you wish to send through the Gmail SMTP server (smtp.gmail.com, port 465, encrypted), turn on 2-step verification and create an <a href='https://myaccount.google.com/apppasswords' target='_blank'>app password</a>. Use that app password instead of your normal password.",
+		"saveSettings": "Save settings",
+		"saving": "Saving settings...",
+		"saved": "Settings saved",
+		"testing": "Sending testmail, please wait...",
+		"test_sent": "Testmail sent to the sender address. Server response:",
+		"encrypted_connection": "Use encrypted connection",
+		"encrypted_connection_help": "Turn this on for port 465. For port 587 leave it off, the connection is upgraded to encryption automatically when the server supports it.",
+		"allow_invalid_certificates": "Accept self-signed or invalid certificates"
+	}
 }

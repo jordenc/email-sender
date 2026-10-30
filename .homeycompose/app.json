@@ -1,0 +1,54 @@
+{
+  "id": "email.sender",
+  "version": "1.2.0",
+  "compatibility": ">=12.9.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Email sender",
+    "nl": "Email versturen"
+  },
+  "description": {
+    "en": "Send email using Homey",
+    "nl": "Verstuur e-mail met Homey"
+  },
+  "category": "internet",
+  "brandColor": "#e17918",
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Corbata",
+    "email": "info@corbata.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Inversion-NL",
+        "email": "inversion-nl@gmail.com"
+      },
+      {
+        "name": "Geurt Dijker",
+        "email": "Homey.Apps@dijker.nu",
+        "website": "http://www.dijker.nu"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "email": "info@chamidmedia.nl",
+        "currency": "EUR"
+      }
+    }
+  },
+  "api": {
+    "testmail": {
+      "method": "POST",
+      "path": "/testmail"
+    }
+  }
+}
