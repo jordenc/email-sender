@@ -18,6 +18,9 @@
 		"test_sent": "Testmail verstuurd naar het adres van de afzender. Antwoord van de server:",
 		"encrypted_connection": "Gebruik gecodeerde verbinding",
 		"encrypted_connection_help": "Zet dit aan voor poort 465. Laat het uit voor poort 587, de verbinding wordt dan automatisch gecodeerd als de server dat ondersteunt.",
+		"log_title": "Log",
+		"log_refresh": "Log verversen",
+		"log_empty": "Nog geen logregels. De log wordt bewaard tot de app herstart.",
 		"allow_invalid_certificates": "Accepteer zelf-ondertekende of ongeldige certificaten"
 	}
 }

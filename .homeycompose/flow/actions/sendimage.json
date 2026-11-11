@@ -4,12 +4,12 @@
     "nl": "Stuur afbeelding tag"
   },
   "titleFormatted": {
-    "en": "Send image [[droptoken]] to [[mailto]] with subject [[subject]] and text [[body]]",
-    "nl": "Stuur afbeelding [[droptoken]] naar [[mailto]] met onderwerp [[subject]] en tekst [[body]]"
+    "en": "Send image [[droptoken]] to [[mailto]] with subject [[subject]] and text [[body]], image [[image_mode]]",
+    "nl": "Stuur afbeelding [[droptoken]] naar [[mailto]] met onderwerp [[subject]] en tekst [[body]], afbeelding [[image_mode]]"
   },
   "hint": {
-    "en": "The image is shown in the mail and added as attachment. The text is optional.",
-    "nl": "De afbeelding wordt in de e-mail getoond en als bijlage toegevoegd. De tekst is optioneel."
+    "en": "Choose whether the image is shown in the mail, added as attachment or both. Without a choice both are used. The text is optional.",
+    "nl": "Kies of de afbeelding in de e-mail wordt getoond, als bijlage wordt toegevoegd of allebei. Zonder keuze gebeurt allebei. De tekst is optioneel."
   },
   "droptoken": [
     "image"
@@ -39,6 +39,38 @@
         "nl": "Tekst (optioneel)"
       },
       "required": false
+    },
+    {
+      "name": "image_mode",
+      "type": "dropdown",
+      "required": false,
+      "placeholder": {
+        "en": "In the mail and as attachment",
+        "nl": "In de e-mail en als bijlage"
+      },
+      "values": [
+        {
+          "id": "both",
+          "label": {
+            "en": "in the mail and as attachment",
+            "nl": "in de e-mail en als bijlage"
+          }
+        },
+        {
+          "id": "inline",
+          "label": {
+            "en": "in the mail only",
+            "nl": "alleen in de e-mail"
+          }
+        },
+        {
+          "id": "attachment",
+          "label": {
+            "en": "as attachment only",
+            "nl": "alleen als bijlage"
+          }
+        }
+      ]
     }
   ]
 }

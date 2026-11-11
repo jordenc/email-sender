@@ -18,6 +18,9 @@
 		"test_sent": "Testmail sent to the sender address. Server response:",
 		"encrypted_connection": "Use encrypted connection",
 		"encrypted_connection_help": "Turn this on for port 465. For port 587 leave it off, the connection is upgraded to encryption automatically when the server supports it.",
+		"log_title": "Log",
+		"log_refresh": "Refresh log",
+		"log_empty": "No log lines yet. The log is kept until the app restarts.",
 		"allow_invalid_certificates": "Accept self-signed or invalid certificates"
 	}
 }

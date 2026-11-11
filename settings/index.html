@@ -16,6 +16,32 @@
             .error {
                 color: #d0021b;
             }
+            #log {
+                margin: 10px 0;
+                font-family: ui-monospace, Menlo, Consolas, monospace;
+                font-size: 12px;
+                line-height: 1.4;
+            }
+            .log-line {
+                display: flex;
+                gap: 8px;
+                padding: 4px 0;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+            }
+            .log-time {
+                flex: 0 0 auto;
+                opacity: 0.6;
+                white-space: nowrap;
+            }
+            .log-message {
+                flex: 1 1 auto;
+                min-width: 0;
+                word-break: break-word;
+                white-space: pre-wrap;
+            }
+            .log-empty {
+                opacity: 0.6;
+            }
 		</style>
 
     </head>
@@ -86,6 +112,10 @@
         <button id="savebutton" class="homey-button-primary-full" data-i18n="settings.saveSettings">Save changes</button>
         <button id="testbutton" class="homey-button-secondary-shadow-full" data-i18n="settings.testSettings">Test settings</button>
 
+        <h2 class="homey-subtitle" data-i18n="settings.log_title">Log</h2>
+        <div id="log"></div>
+        <button id="logbutton" class="homey-button-secondary-shadow-full" data-i18n="settings.log_refresh">Refresh log</button>
+
         <p>&nbsp;</p>
         <p>&nbsp;</p>
 
@@ -110,6 +140,8 @@
 	        const test_button = document.getElementById('testbutton');
 	        const test_result = document.getElementById('testresult');
 	        const use_credentials = document.getElementById('use_credentials');
+	        const log_button = document.getElementById('logbutton');
+	        const log_list = document.getElementById('log');
 
 	        function get_setting(key) {
 	            return new Promise((resolve, reject) => {
@@ -158,7 +190,69 @@
 	            update_credentials();
 	        }
 
+	        function pad(number) {
+	            return String(number).padStart(2, '0');
+	        }
+
+	        // Time only for today, date and time for older lines
+	        function format_time(timestamp) {
+	            const date = new Date(timestamp);
+	            const time = pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds());
+
+	            if (date.toDateString() === new Date().toDateString()) return time;
+
+	            return pad(date.getDate()) + '-' + pad(date.getMonth() + 1) + ' ' + time;
+	        }
+
+	        function render_log(lines) {
+	            log_list.textContent = '';
+
+	            if (!lines || lines.length === 0) {
+	                const empty = document.createElement('div');
+	                empty.className = 'log-empty';
+	                empty.textContent = Homey.__('settings.log_empty');
+	                log_list.appendChild(empty);
+	                return;
+	            }
+
+	            // Newest first
+	            lines.slice().reverse().forEach(line => {
+	                const row = document.createElement('div');
+	                row.className = 'log-line' + (line.level === 'error' ? ' error' : '');
+
+	                const time = document.createElement('span');
+	                time.className = 'log-time';
+	                time.textContent = format_time(line.time);
+
+	                const message = document.createElement('span');
+	                message.className = 'log-message';
+	                message.textContent = line.message;
+
+	                row.appendChild(time);
+	                row.appendChild(message);
+	                log_list.appendChild(row);
+	            });
+	        }
+
+	        function load_log() {
+	            log_button.disabled = true;
+
+	            Homey.api('GET', '/logs', null, (err, lines) => {
+	                log_button.disabled = false;
+
+	                if (err) {
+	                    log_list.textContent = err.message || err;
+	                    log_list.className = 'error';
+	                    return;
+	                }
+
+	                log_list.className = '';
+	                render_log(lines);
+	            });
+	        }
+
 	        use_credentials.addEventListener('change', update_credentials);
+	        log_button.addEventListener('click', load_log);
 
 	        save_button.addEventListener('click', async () => {
 	            save_button.disabled = true;
@@ -185,6 +279,7 @@
 
 	            Homey.api('POST', '/testmail', read_form(), (err, result) => {
 	                test_button.disabled = false;
+	                load_log();
 
 	                if (err) return show_result(err.message || err, true);
 
@@ -195,6 +290,8 @@
 	        load_settings()
 	            .catch(err => show_result(err.message || err, true))
 	            .finally(() => Homey.ready());
+
+	        load_log();
 
 	    }
 

@@ -19,16 +19,28 @@ module.exports = {
 			allow_invalid_certificates: body.allow_invalid_certificates !== false
 		};
 
-		const result = await mailer.send_mail(settings, {
-			to: settings.mail_from,
-			subject: 'Testmail',
-			text: 'This is a testmail from your Homey.',
-			html: '<p>This is a <b>testmail</b> from your Homey.</p>'
-		});
+		let result;
+
+		try {
+			result = await mailer.send_mail(settings, {
+				to: settings.mail_from,
+				subject: 'Testmail',
+				text: 'This is a testmail from your Homey.',
+				html: '<p>This is a <b>testmail</b> from your Homey.</p>'
+			});
+		} catch (err) {
+			homey.app.error('Testmail failed: ' + (err.message || err));
+			throw err;
+		}
 
 		homey.app.log('Testmail sent: ' + result.response);
 
 		return {response: result.response};
+	},
+
+	// The last log lines of the app, oldest first
+	async logs({homey}) {
+		return homey.app.get_log_lines();
 	}
 
 };

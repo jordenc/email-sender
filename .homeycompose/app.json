@@ -49,6 +49,10 @@
     "testmail": {
       "method": "POST",
       "path": "/testmail"
+    },
+    "logs": {
+      "method": "GET",
+      "path": "/logs"
     }
   }
 }
